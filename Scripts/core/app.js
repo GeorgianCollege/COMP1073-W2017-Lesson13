@@ -11,6 +11,20 @@
     var goodByeLabel;
     var clickMeButton;
     var appStarted;
+    var loader;
+    /**
+     * This method Preloads all the image files for the app
+     *
+     * @method Init
+     * @returns void
+     */
+    function Init() {
+        loader = new createjs.LoadQueue(); // load container
+        loader.on("complete", Start); // call start when finished loading
+        loader.loadManifest([
+            { id: "clickMeButton", src: "../../Assets/images/clickMeButton.png" }
+        ]);
+    }
     /**
      * This method initializes the createjs Stage object and
      * starts the Game Loop
@@ -57,7 +71,7 @@
         goodByeLabel = new objects.Label("Good Bye!", "24px", "Arial", "#FF0000", canvasHalfWidth, canvasHalfHeight, true);
         stage.addChild(goodByeLabel);
         // add a clickMeButton to the stage
-        clickMeButton = new objects.Button("../../Assets/images/clickMeButton.png", true, 150, 40, canvasHalfWidth, canvasHalfHeight + 100);
+        clickMeButton = new objects.Button(loader, "clickMeButton", 150, 40, canvasHalfWidth, canvasHalfHeight + 100, true);
         stage.addChild(clickMeButton);
         // click button event listener
         clickMeButton.on("click", function (event) {
@@ -65,6 +79,11 @@
             goodByeLabel.text = "See Ya!";
         });
     }
+    /**
+     * This menthod responds to the resizing of the window object
+     * @method OnResize
+     * @returns void
+     */
     function OnResize() {
         canvasWidth = window.innerWidth * 0.64;
         canvasHeight = window.innerHeight * 0.96;
@@ -82,7 +101,8 @@
             clickMeButton.y = canvasHalfHeight + 100;
         }
     }
-    window.onload = Start;
+    // window binding events
+    window.onload = Init;
     window.onresize = OnResize;
 })();
 //# sourceMappingURL=app.js.map

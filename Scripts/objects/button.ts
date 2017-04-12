@@ -14,21 +14,23 @@ module objects {
      * Creates an instance of Button.
      *
      * @param {string} _imageString
-     * @param {boolean} _isCentered
      * @param {number} _width
      * @param {number} _height
      * @param {number} x
      * @param {number} y
+     * @param {boolean} _isCentered
      *
      * @memberOf Button
      */
     constructor(
+      loader: createjs.LoadQueue,
       private _imageString:string,
-      private _isCentered: boolean,
       private _width: number,
       private _height: number,
-      x:number, y:number) {
-      super(_imageString)
+      x:number, y:number,
+      private _isCentered: boolean) {
+      // send the result of the preload queue to the superclass constructor
+      super(loader.getResult(_imageString));
 
       // check to see if the user requires the button's pivot to be centered
       if(_isCentered) {

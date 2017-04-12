@@ -24,20 +24,22 @@ var objects;
          * Creates an instance of Button.
          *
          * @param {string} _imageString
-         * @param {boolean} _isCentered
          * @param {number} _width
          * @param {number} _height
          * @param {number} x
          * @param {number} y
+         * @param {boolean} _isCentered
          *
          * @memberOf Button
          */
-        function Button(_imageString, _isCentered, _width, _height, x, y) {
-            var _this = _super.call(this, _imageString) || this;
+        function Button(loader, _imageString, _width, _height, x, y, _isCentered) {
+            var _this = 
+            // send the result of the preload queue to the superclass constructor
+            _super.call(this, loader.getResult(_imageString)) || this;
             _this._imageString = _imageString;
-            _this._isCentered = _isCentered;
             _this._width = _width;
             _this._height = _height;
+            _this._isCentered = _isCentered;
             // check to see if the user requires the button's pivot to be centered
             if (_isCentered) {
                 _this.regX = _this._width * 0.5;
