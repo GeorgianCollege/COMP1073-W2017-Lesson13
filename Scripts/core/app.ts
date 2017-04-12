@@ -3,12 +3,19 @@
 
   // Function Level Variables
   let canvas: HTMLElement;
+  let canvasWidth: number;
+  let canvasHeight: number;
+  let canvasHalfWidth: number;
+  let canvasHalfHeight: number;
+
   let stage: createjs.Stage;
 
   let helloLabel: objects.Label;
   let goodByeLabel: objects.Label;
 
   let clickMeButton: objects.Button;
+
+  let appStarted:boolean;
 
   /**
    * This method initializes the createjs Stage object and
@@ -18,8 +25,13 @@
    * @returns void
    */
   function Start(): void {
+    appStarted = false; // app hasn't started yet
+
     // gets a reference ("hook") into the canvas element
     canvas = document.getElementById("canvas");
+
+    OnResize(); // sets the size of the canvas
+
     // creates a new stage container - parent container for our app
     stage = new createjs.Stage(canvas);
     createjs.Ticker.framerate = 60; // set framerate to 60 FPS
@@ -51,20 +63,23 @@
    * @returns void
    */
   function Main(): void {
-    console.log("App Started!!");
+    appStarted = true;
 
     // all objects added to the stage appear in "layer order"
 
     // add a helloLabel to the stage
-    helloLabel = new objects.Label("Hello, World", "20px", "Consolas", "#000000", 125, 125, true);
+    helloLabel = new objects.Label("Hello, World", "20px", "Consolas", "#000000",
+    canvasHalfWidth, canvasHalfHeight, true);
     stage.addChild(helloLabel);
 
     // add a goodbyeLabel to the stage
-    goodByeLabel = new objects.Label("Good Bye!", "24px", "Arial", "#FF0000", 125, 125, true);
+    goodByeLabel = new objects.Label("Good Bye!", "24px", "Arial", "#FF0000",
+    canvasHalfWidth, canvasHalfHeight, true);
     stage.addChild(goodByeLabel);
 
     // add a clickMeButton to the stage
-    clickMeButton = new objects.Button("../../Assets/images/clickMeButton.png", true, 150, 40, 125, 200);
+    clickMeButton = new objects.Button("../../Assets/images/clickMeButton.png", true,
+    150, 40, canvasHalfWidth, canvasHalfHeight + 100);
     stage.addChild(clickMeButton);
 
     // click button event listener
@@ -74,6 +89,29 @@
     });
   }
 
+  function OnResize() {
+    canvasWidth = window.innerWidth * 0.64;
+    canvasHeight = window.innerHeight * 0.96;
+    canvasHalfWidth = canvasWidth * 0.5;
+    canvasHalfHeight = canvasHeight * 0.5;
+
+    canvas.setAttribute("width", canvasWidth.toString());
+    canvas.setAttribute("height", canvasHeight.toString());
+
+    // check if app started then re-align the labels and buttons
+    if(appStarted) {
+      helloLabel.x = canvasHalfWidth;
+      helloLabel.y = canvasHalfHeight;
+      goodByeLabel.x = canvasHalfWidth;
+      goodByeLabel.y = canvasHalfHeight;
+      clickMeButton.x = canvasHalfWidth;
+      clickMeButton.y = canvasHalfHeight + 100;
+    }
+
+  }
+
   window.onload = Start;
+
+  window.onresize = OnResize;
 
 })();
