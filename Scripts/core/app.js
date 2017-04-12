@@ -71,7 +71,7 @@
         goodByeLabel = new objects.Label("Good Bye!", "24px", "Arial", "#FF0000", canvasHalfWidth, canvasHalfHeight, true);
         stage.addChild(goodByeLabel);
         // add a clickMeButton to the stage
-        clickMeButton = new objects.Button(loader, "clickMeButton", 150, 40, canvasHalfWidth, canvasHalfHeight + 100, true);
+        clickMeButton = new objects.Button(loader, "clickMeButton", canvasHalfWidth, canvasHalfHeight + 100, true);
         stage.addChild(clickMeButton);
         // click button event listener
         clickMeButton.on("click", function (event) {

@@ -95,7 +95,7 @@
 
     // add a clickMeButton to the stage
     clickMeButton = new objects.Button(loader, "clickMeButton",
-    150, 40, canvasHalfWidth, canvasHalfHeight + 100, true);
+    canvasHalfWidth, canvasHalfHeight + 100, true);
     stage.addChild(clickMeButton);
 
     // click button event listener

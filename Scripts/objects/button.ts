@@ -25,8 +25,6 @@ module objects {
     constructor(
       loader: createjs.LoadQueue,
       private _imageString:string,
-      private _width: number,
-      private _height: number,
       x:number, y:number,
       private _isCentered: boolean) {
       // send the result of the preload queue to the superclass constructor
@@ -34,8 +32,8 @@ module objects {
 
       // check to see if the user requires the button's pivot to be centered
       if(_isCentered) {
-        this.regX = this._width * 0.5;
-        this.regY = this._height * 0.5;
+        this.regX = this.getBounds().width * 0.5;
+        this.regY = this.getBounds().height * 0.5;
       }
 
       // set the position of the button
