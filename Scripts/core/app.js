@@ -20,6 +20,7 @@
         stage = new createjs.Stage(canvas);
         createjs.Ticker.framerate = 60; // set framerate to 60 FPS
         createjs.Ticker.on("tick", Update); // call the Update method every frame
+        stage.enableMouseOver(20); // enables our mouseover and mouseout events
         Main(); // call the main function
     }
     /**
@@ -49,13 +50,10 @@
         goodByeLabel = new objects.Label("Good Bye!", "24px", "Arial", "#FF0000", 125, 125, true);
         stage.addChild(goodByeLabel);
         // add a clickMeButton to the stage
-        clickMeButton = new createjs.Bitmap("../../Assets/images/clickMeButton.png");
-        clickMeButton.regX = clickMeButton.getBounds().width * 0.5;
-        clickMeButton.regY = clickMeButton.getBounds().height * 0.5;
-        clickMeButton.x = 125;
-        clickMeButton.y = 200;
+        clickMeButton = new objects.Button("../../Assets/images/clickMeButton.png", true, 150, 40, 125, 200);
         stage.addChild(clickMeButton);
-        clickMeButton.on("click", function () {
+        // click button event listener
+        clickMeButton.on("click", function (event) {
             helloLabel.text = "Hi Ya!";
             goodByeLabel.text = "See Ya!";
         });
